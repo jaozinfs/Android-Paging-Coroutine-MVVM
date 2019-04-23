@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5CCC75</color>
+    <color name="colorPrimaryDark">#52B668</color>
+    <color name="colorAccent">#00796B</color>
+    <color name="colorLight">#FFF</color>
+    <color name="colorPane">#EEEEEE</color>
+    <color name="colorTransparent">#4A000000</color>
+    <color name="colorTransparentTotally">#003F0000</color>
+
+
+    <!-- login colors -->
+    <color name="login_bottom_register_container">#32000000</color>
+    <color name="login_actions_hint_color">#ddd</color>
+    <color name="login_color">#5CCC75</color>
+
+
+    <color name="login_edittext_shape_inner_color">#2D000000</color>
+    <color name="login_edittext_shape_stroke_color">#16202020</color>
+
+    <!-- Main Colors -->
+    <color name="backgroundColor">#ffff</color>
+    <color name="tectColor">#000</color>
+    <color name="songTimerColor">#484848</color>
+
+</resources>

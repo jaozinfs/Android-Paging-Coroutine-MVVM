@@ -6,7 +6,7 @@ import findsolucoes.com.assetec.model.dao.UserDao
 import findsolucoes.com.assetec.model.entitys.UserEntity
 
 @Database(entities = [UserEntity::class], version = 1, exportSchema = false)
-abstract class AssetecDatabase : RoomDatabase(){
+abstract class ApplicationDatabase : RoomDatabase(){
 
     abstract fun userDao(): UserDao
 

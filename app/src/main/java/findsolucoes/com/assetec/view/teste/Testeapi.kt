@@ -5,13 +5,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import findsolucoes.com.assetec.R
 import findsolucoes.com.assetec.adapter.MovieAdapter
+import findsolucoes.com.assetec.mvp.Teste
 import findsolucoes.com.assetec.utils.BaseActivity
 import findsolucoes.com.assetec.viewmodel.teste.TesteViewModel
 
 import kotlinx.android.synthetic.main.activity_teste.*
 
 
-class Testeapi : BaseActivity() {
+class Testeapi : BaseActivity(), Teste.View {
 
     private lateinit var viewModel: TesteViewModel
     val postListAdapter: MovieAdapter = MovieAdapter()
@@ -19,26 +20,24 @@ class Testeapi : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teste)
-        init()
 
-
-        observeLiveData()
-        initializeList()
+        initViewmodel()
+        observedatas()
+        listInit()
     }
 
-    private fun init() {
+    override fun initViewmodel() {
         viewModel = ViewModelProviders.of(this, viewModelFactory ).get( TesteViewModel::class.java )
     }
-    private fun observeLiveData() {
+
+    override  fun observedatas() {
         viewModel.getPosts().observe(this, Observer {
             postListAdapter.submitList(it)
         })
     }
-    private fun initializeList() {
+
+    override fun listInit() {
         postList.layoutManager = LinearLayoutManager(this)
         postList.adapter = postListAdapter
     }
-
-
-
 }

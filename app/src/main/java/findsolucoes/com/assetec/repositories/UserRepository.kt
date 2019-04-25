@@ -1,11 +1,11 @@
 package findsolucoes.com.assetec.repositories
 
 import android.os.AsyncTask
-import findsolucoes.com.assetec.database.AssetecDatabase
+import findsolucoes.com.assetec.database.ApplicationDatabase
 import findsolucoes.com.assetec.model.dao.UserDao
 import findsolucoes.com.assetec.model.entitys.UserEntity
 
-class UserRepository(private val db: AssetecDatabase){
+class UserRepository(private val db: ApplicationDatabase){
 
 
     fun updateUser(userEntity: UserEntity, callback: () -> Unit, onError: (Throwable) -> Unit){

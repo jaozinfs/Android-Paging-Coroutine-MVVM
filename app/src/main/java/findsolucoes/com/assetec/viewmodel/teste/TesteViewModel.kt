@@ -1,20 +1,13 @@
 package findsolucoes.com.assetec.viewmodel.teste
 
-import android.annotation.SuppressLint
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import findsolucoes.com.assetec.BuildConfig
-import findsolucoes.com.assetec.adapter.MovieAdapter
 import findsolucoes.com.assetec.client.RetrofitApiInterface
-import findsolucoes.com.assetec.client.response.RedditPost
 import findsolucoes.com.assetec.client.response.Result
-import findsolucoes.com.assetec.view.teste.PostsDataSource
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import findsolucoes.com.assetec.repositories.PostsDataSource
 
 class TesteViewModel(private val retrofitApiInterface: RetrofitApiInterface) : ViewModel() {
 
@@ -40,7 +33,7 @@ class TesteViewModel(private val retrofitApiInterface: RetrofitApiInterface) : V
 
         val dataSourceFactory = object : DataSource.Factory<Int, Result>() {
             override fun create(): DataSource<Int, Result> {
-                return PostsDataSource( retrofitApiInterface )
+                return PostsDataSource(retrofitApiInterface)
             }
 
         }

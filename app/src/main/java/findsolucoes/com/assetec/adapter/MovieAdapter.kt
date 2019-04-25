@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Callback
@@ -46,6 +48,21 @@ class MovieAdapter : PagedListAdapter<Result, MovieAdapter.MyViewHolder>(DiffUti
                 .build()
 
             itemView.image_view_movie.load( posterUri.toString(), null, viewModel.progressVisibility )
+        }
+    }
+
+    /**
+     * View model provide to HolerAdapter
+     *
+     *
+     */
+    class MovieViewModel : ViewModel() {
+        val postTitle = MutableLiveData<String>()
+        val progressVisibility: MutableLiveData<Int> = MutableLiveData()
+
+        fun bind(result: Result){
+            postTitle.value = result.originalTitle
+            progressVisibility.value = View.VISIBLE
         }
     }
 }

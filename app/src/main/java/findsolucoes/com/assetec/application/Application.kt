@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import findsolucoes.com.assetec.BuildConfig
 import findsolucoes.com.assetec.client.RetrofitApiInterface
-import findsolucoes.com.assetec.database.AssetecDatabase
+import findsolucoes.com.assetec.database.ApplicationDatabase
 import findsolucoes.com.assetec.repositories.UserRepository
 import findsolucoes.com.assetec.viewmodel.ViewModelFactory
 import org.kodein.di.Kodein
@@ -22,9 +22,9 @@ import okhttp3.logging.HttpLoggingInterceptor
  * Application control of class
  *
  */
-class AssetecApplication : Application(), KodeinAware {
+class Application : Application(), KodeinAware {
 
-    var database: AssetecDatabase? = null
+    var database: ApplicationDatabase? = null
 
 
     /**
@@ -51,7 +51,7 @@ class AssetecApplication : Application(), KodeinAware {
         }
 
 
-        bind<AssetecDatabase>() with singleton { Room.databaseBuilder(applicationContext, AssetecDatabase::class.java, "assetec-database-v1").build() }
+        bind<ApplicationDatabase>() with singleton { Room.databaseBuilder(applicationContext, ApplicationDatabase::class.java, "app-database").build() }
 
         bind<UserRepository>() with singleton { UserRepository(instance()) }
 

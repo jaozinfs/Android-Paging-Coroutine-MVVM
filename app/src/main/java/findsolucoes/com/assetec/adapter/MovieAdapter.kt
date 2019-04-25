@@ -1,65 +1,51 @@
 package findsolucoes.com.assetec.adapter
 
-import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import findsolucoes.com.assetec.R
+import findsolucoes.com.assetec.utils.DiffUtilCallBack
 import kotlinx.android.synthetic.main.list_row.view.*
-import java.lang.Exception
 import findsolucoes.com.assetec.client.response.Result
-
+import findsolucoes.com.assetec.utils.extension.load
+import findsolucoes.com.assetec.viewmodel.adapter.MovieViewModel
+import findsolucoes.com.assetec.databinding.ListRowBinding
 /**
- * Created by Amanjeet Singh on 25/1/18.
+ * Created by Joao Singh on 25/1/18.
  */
-class MovieAdapter(val context: Context) : RecyclerView.Adapter<MovieAdapter.MyViewHolder>() {
+class MovieAdapter : PagedListAdapter<Result, MovieAdapter.MyViewHolder>(DiffUtilCallBack()) {
 
-    private var resultList: List<Result>? = mutableListOf()
-
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bindItems(resultList?.get(position))
-    }
-
-    override fun getItemCount(): Int {
-        return resultList?.size!!
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(context).inflate(
-            R.layout.list_row,
-            parent, false)
-        return MyViewHolder(view)
+        val binding: ListRowBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.list_row, parent, false)
+        return MyViewHolder(binding)
     }
 
-    fun updatePostList(postList:List<Result>?){
-        this.resultList = postList
-        notifyDataSetChanged()
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        getItem(position)?.let { holder.bindItems(it) }
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    class MyViewHolder(private val binding: ListRowBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val viewModel = MovieViewModel()
 
         fun bindItems(result: Result?) {
-            itemView.movie_title.text = result?.title
-            val posterUri = Uri.parse("http://image.tmdb.org/t/p/w185/").buildUpon()
-                .appendEncodedPath(result?.posterPath)
+
+            viewModel.bind(result!!)
+            binding.viewModel = viewModel
+
+            val posterUri = Uri.parse("http://image.tmdb.org/t/p/w185/")
+                .buildUpon()
+                .appendEncodedPath(result.posterPath)
                 .build()
-            itemView.progress_bar.visibility = View.VISIBLE
 
-            Picasso.get().load(posterUri.toString())
-                .into(itemView.image_view_movie, object : Callback {
-                    override fun onSuccess() {
-                        itemView.progress_bar.visibility = View.GONE
-                    }
-
-                    override fun onError(e: Exception?) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
-
-                })
+            itemView.image_view_movie.load( posterUri.toString(), null, viewModel.progressVisibility )
         }
     }
 }
